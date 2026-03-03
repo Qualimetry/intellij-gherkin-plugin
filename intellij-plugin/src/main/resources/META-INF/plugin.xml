@@ -1,0 +1,49 @@
+<idea-plugin>
+    <id>com.qualimetry.gherkin</id>
+    <name>Qualimetry Gherkin Analyzer</name>
+    <vendor url="https://qualimetry.com">Qualimetry</vendor>
+
+    <description><![CDATA[
+    <p>Static analysis of Cucumber Gherkin feature files (<code>.feature</code>)
+    in IntelliJ IDEA, Rider, and other JetBrains IDEs. Also runs in JetBrains Qodana.</p>
+    <p>Powered by the same engine as the Qualimetry Gherkin Analyzer for VS Code and SonarQube.</p>
+    <ul>
+      <li>83 rules covering structure, design, style, tags, variables, and spelling</li>
+      <li>Real-time analysis as you edit</li>
+      <li>Works in IntelliJ IDEA, Rider, and JetBrains Qodana</li>
+    </ul>
+    ]]></description>
+
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <localInspection
+                groupName="Qualimetry Gherkin"
+                displayName="Qualimetry Gherkin Analysis"
+                shortName="QualimetryGherkinInspection"
+                enabledByDefault="true"
+                level="WARNING"
+                implementationClass="com.qualimetry.intellij.gherkin.GherkinInspection"/>
+
+        <applicationConfigurable
+                parentId="tools"
+                instance="com.qualimetry.intellij.gherkin.GherkinAnalyzerConfigurable"
+                id="com.qualimetry.gherkin.settings"
+                displayName="Qualimetry Gherkin Analyzer"/>
+
+        <applicationService
+                serviceImplementation="com.qualimetry.intellij.gherkin.GherkinAnalyzerSettings"/>
+
+        <notificationGroup id="Qualimetry Gherkin" displayType="BALLOON"/>
+    </extensions>
+
+    <actions>
+        <group id="Qualimetry.Gherkin.Tools" text="Qualimetry Gherkin" popup="true">
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
+            <action id="Qualimetry.Gherkin.ImportFromSonarQube"
+                    class="com.qualimetry.intellij.gherkin.ImportFromSonarQubeAction"
+                    text="Import Rules from SonarQube"
+                    description="Import active Gherkin rules from a SonarQube quality profile"/>
+        </group>
+    </actions>
+</idea-plugin>
